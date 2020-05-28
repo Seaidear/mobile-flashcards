@@ -31,7 +31,7 @@ const initialData = {
   },
 };
 
-export const getInitialData = () => initialData;
+const getInitialData = () => initialData;
 
 export const getDecks = async () => {
   try {
