@@ -1,14 +1,14 @@
 {
-  "name": "reactndMobileFlashcards",
-  "displayName": "reactndMobileFlashcards",
+  "name": "Mobile Flashcards",
+  "displayName": "Mobile Flashcards",
   "expo": {
-    "name": "reactndMobileFlashcards",
-    "slug": "reactndMobileFlashcards",
+    "name": "Mobile Flashcards",
+    "slug": "mobile-flashcards",
+    "orientation": "portrait",
     "version": "1.0.0",
     "platforms": [
       "ios",
-      "android",
-      "web"
+      "android"
     ],
     "assetBundlePatterns": [
       "**/*"
