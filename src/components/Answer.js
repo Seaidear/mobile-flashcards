@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import React from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 const Answer = ({ answer, answerCard }) => (
   <View style={styles.answer}>
@@ -19,23 +19,23 @@ const styles = StyleSheet.create({
   answer: {
     fontSize: 18,
     padding: 20,
-    alignItems: "center",
-    textAlign: "center",
+    alignItems: 'center',
+    textAlign: 'center',
   },
   submitBtn: {
     paddingVertical: 16,
     paddingHorizontal: 32,
-    color: "white",
+    color: 'white',
     borderRadius: 4,
     fontSize: 16,
-    backgroundColor: "black",
-    width: 180,
+    backgroundColor: '#694fad',
+    width: 240,
     marginBottom: 20,
   },
   correct: {
-    backgroundColor: "green",
+    backgroundColor: 'green',
   },
   incorrect: {
-    backgroundColor: "red",
+    backgroundColor: 'red',
   },
 });
