@@ -1,12 +1,12 @@
 import 'react-native-gesture-handler';
 import * as React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import DeckList from '../components/DeckList';
 import NewDeck from '../components/NewDeck';
 import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-const Tab = createBottomTabNavigator();
+const Tab = createMaterialBottomTabNavigator();
 
 class Home extends React.Component {
   render() {
@@ -14,13 +14,13 @@ class Home extends React.Component {
     return (
       <Tab.Navigator
         screenOptions={({ route }) => ({
-          tabBarIcon: ({ color, size }) => {
+          tabBarIcon: ({ color }) => {
             if (route.name === 'Decks') {
               return (
                 <MaterialIcons
                   name="library-books"
                   name="library-books"
-                  size={size}
+                  size={26}
                   color={color}
                 />
               );
@@ -28,17 +28,17 @@ class Home extends React.Component {
               return (
                 <MaterialCommunityIcons
                   name="plus-box"
-                  size={size}
+                  size={26}
                   color={color}
                 />
               );
             }
           },
         })}
-        tabBarOptions={{
-          activeTintColor: 'tomato',
-          inactiveTintColor: 'gray',
-        }}
+        initialRouteName="Decks"
+        activeColor="#f0edf6"
+        inactiveColor="#3e2465"
+        barStyle={{ backgroundColor: '#694fad' }}
       >
         <Tab.Screen name="Decks">
           {({ navigation }) => (
