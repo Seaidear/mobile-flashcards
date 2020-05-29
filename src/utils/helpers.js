@@ -7,21 +7,19 @@ export const StorageKeys = {
   Notifications: 'Notifications',
 };
 
-export const createNotification = () => {
-  return {
-    title: 'What a great time to take a quiz',
-    body: "It's time to test your knowledge! Are you prepared?",
-    ios: {
-      sound: true,
-    },
-    android: {
-      sound: true,
-      priority: 'high',
-      sticky: false,
-      vibrate: true,
-    },
-  };
-};
+export const createNotification = () => ({
+  title: 'What a great time to take a quiz',
+  body: "It's time to test your knowledge! Are you prepared?",
+  ios: {
+    sound: true,
+  },
+  android: {
+    sound: true,
+    priority: 'high',
+    sticky: false,
+    vibrate: true,
+  },
+});
 
 export const setLocalNotification = () => {
   AsyncStorage.getItem(StorageKeys.Notifications)
@@ -52,8 +50,7 @@ export const setLocalNotification = () => {
     });
 };
 
-export const clearLocalNotification = () => {
-  return AsyncStorage.removeItem(StorageKeys.Notifications).then(
+export const clearLocalNotification = () =>
+  AsyncStorage.removeItem(StorageKeys.Notifications).then(
     Notifications.cancelAllScheduledNotificationsAsync,
   );
-};
