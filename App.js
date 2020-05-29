@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Spinner } from 'native-base';
-import { Font } from 'expo';
+import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import { Provider } from 'react-redux';
 import Main from './src/components/Main';
