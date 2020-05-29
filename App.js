@@ -1,42 +1,122 @@
-import React, { useEffect, useState } from 'react';
-import { Container, Spinner } from 'native-base';
-import * as Font from 'expo-font';
-import { Ionicons } from '@expo/vector-icons';
-import { Provider } from 'react-redux';
-import Main from './src/components/Main';
-import store from './src/store';
+import 'react-native-gesture-handler';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Home from './src/components/Home';
+import Deck from './src/components/Deck';
+import NewQuestion from './src/components/NewQuestion';
+import {
+  getDecks,
+  saveDeckTitle,
+  removeDeck,
+  addCardToDeck,
+} from './src/utils/api';
+import Quiz from './src/components/Quiz';
 import { setLocalNotification } from './src/utils/helpers';
 
-const App = () => {
-  const [isAppReady, setIsAppReady] = useState(false);
+const Stack = createStackNavigator();
 
-  useEffect(() => {
-    const loadFontAsync = async () => {
-      await Font.loadAsync({
-        Roboto: require('native-base/Fonts/Roboto.ttf'),
-        Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
-        ...Ionicons.font,
-      });
+class App extends React.Component {
+  state = {
+    decks: {},
+  };
 
-      setIsAppReady(true);
-    };
-
-    loadFontAsync();
+  componentDidMount() {
     setLocalNotification();
-  });
+    getDecks().then((results) => {
+      this.setState({
+        decks: results,
+      });
+    });
+  }
 
-  if (!isAppReady)
-    return (
-      <Container>
-        <Spinner color="purple" />
-      </Container>
+  addQuestion = (deckId, question) => {
+    addCardToDeck({
+      title: deckId,
+      card: question,
+    }).then(() => {
+      this.setState((prevState) => ({
+        decks: {
+          ...prevState.decks,
+          [deckId]: {
+            ...prevState.decks[deckId],
+            questions: [...prevState.decks[deckId].questions, question],
+          },
+        },
+      }));
+    });
+  };
+
+  deleteDeck = (deckId) => {
+    removeDeck(deckId).then(() => {
+      this.setState(({ decks: { [deckId]: toRemove, ...rest } }) => ({
+        decks: rest,
+      }));
+    });
+  };
+
+  addDeck = (deckId) => {
+    saveDeckTitle(deckId).then(() =>
+      this.setState((prevState) => ({
+        decks: {
+          ...prevState.decks,
+          [deckId]: {
+            title: deckId,
+            questions: [],
+          },
+        },
+      })),
     );
+  };
 
-  return (
-    <Provider store={store}>
-      <Main />
-    </Provider>
-  );
-};
+  render() {
+    const { decks } = this.state;
+    return (
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Home">
+            {() => <Home decks={decks} addDeck={this.addDeck} />}
+          </Stack.Screen>
+          <Stack.Screen name="Deck">
+            {({ route: { params }, navigation }) => (
+              <Deck
+                navigate={navigation.navigate}
+                deleteDeck={() => {
+                  this.deleteDeck(params.deckId);
+                  navigation.navigate('Home');
+                }}
+                {...decks[params.deckId]}
+              />
+            )}
+          </Stack.Screen>
+          <Stack.Screen name="New Question">
+            {({ route: { params }, navigation }) => (
+              <NewQuestion
+                navigate={navigation.navigate}
+                deckId={params.deckId}
+                handleSubmit={(question) =>
+                  this.addQuestion(params.deckId, question)
+                }
+              />
+            )}
+          </Stack.Screen>
+          <Stack.Screen name="Quiz">
+            {({
+              route: {
+                params: { deckId },
+              },
+              navigation,
+            }) => (
+              <Quiz
+                questions={decks[deckId].questions}
+                goBack={() => navigation.navigate('Deck', { deckId })}
+              />
+            )}
+          </Stack.Screen>
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  }
+}
 
 export default App;
