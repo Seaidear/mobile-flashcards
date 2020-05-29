@@ -84,7 +84,8 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     fontSize: 16,
     backgroundColor: '#694fad',
-    width: 180,
+    width: 280,
+    textAlign: 'center',
     marginBottom: 20,
   },
   correct: {
