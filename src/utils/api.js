@@ -1,11 +1,8 @@
 import { AsyncStorage } from 'react-native';
-import { generateUUID } from './helpers';
-
-const CARDS_DATA_ASYNCSTORAGE_KEY = 'cards_data';
+import { StorageKeys } from './helpers';
 
 const initialData = {
-  sxbjgrwdbhf58lxznh9q79: {
-    id: 'sxbjgrwdbhf58lxznh9q79',
+  React: {
     title: 'React',
     questions: [
       {
@@ -18,8 +15,7 @@ const initialData = {
       },
     ],
   },
-  '724mgp7hm68vzvg2amz1hq': {
-    id: '724mgp7hm68vzvg2amz1hq',
+  JavaScript: {
     title: 'JavaScript',
     questions: [
       {
@@ -31,76 +27,47 @@ const initialData = {
   },
 };
 
-const getInitialData = () => initialData;
-
-export const getDecks = async () => {
-  try {
-    const results = await AsyncStorage.getItem(CARDS_DATA_ASYNCSTORAGE_KEY);
-    if (results) {
-      const data = JSON.parse(results);
-      return data;
-    } else {
-      await AsyncStorage.setItem(
-        CARDS_DATA_ASYNCSTORAGE_KEY,
-        JSON.stringify(getInitialData()),
-      );
-      return getInitialData();
+export const getDecks = () =>
+  AsyncStorage.getItem(StorageKeys.Decks).then((result) => {
+    if (!result) {
+      return AsyncStorage.setItem(
+        StorageKeys.Decks,
+        JSON.stringify(initialData),
+      ).then(() => initialData);
     }
-  } catch (error) {
-    await AsyncStorage.setItem(
-      CARDS_DATA_ASYNCSTORAGE_KEY,
-      JSON.stringify(getInitialData()),
-    );
-    return getInitialData();
-  }
-};
+    return JSON.parse(result);
+  });
 
-// export const getDeck = async (id) => {};
+export const getDeck = (title) =>
+  AsyncStorage.getItem(StorageKeys.Decks)
+    .then(JSON.parse)
+    .then((data) => data[title]);
 
-export const deleteDeck = async (deckId) => {
-  const results = await AsyncStorage.getItem(CARDS_DATA_ASYNCSTORAGE_KEY);
-  if (results) {
-    const data = JSON.parse(results);
-    delete data[deckId];
-
-    await AsyncStorage.setItem(
-      CARDS_DATA_ASYNCSTORAGE_KEY,
-      JSON.stringify(data),
-    );
-    return data;
-  }
-  return {};
-};
-
-export const saveDeckTitle = async (title) => {
-  const id = generateUUID();
-  const deck = {
-    id: id,
-    title: title,
-    questions: [],
-  };
-
-  await AsyncStorage.mergeItem(
-    CARDS_DATA_ASYNCSTORAGE_KEY,
+export const saveDeckTitle = (title) =>
+  AsyncStorage.mergeItem(
+    StorageKeys.Decks,
     JSON.stringify({
-      [id]: deck,
+      [title]: {
+        title,
+        questions: [],
+      },
     }),
   );
-  return deck;
-};
 
-export const addCardToDeck = async (deckId, card) => {
-  const results = await AsyncStorage.getItem(CARDS_DATA_ASYNCSTORAGE_KEY);
-  if (results) {
-    const data = JSON.parse(results);
-    const deck = data[deckId];
-    deck.questions = deck.questions.concat([card]);
-    await AsyncStorage.mergeItem(
-      CARDS_DATA_ASYNCSTORAGE_KEY,
-      JSON.stringify({
-        [deckId]: deck,
-      }),
+export const addCardToDeck = ({ title, card }) =>
+  AsyncStorage.mergeItem(
+    StorageKeys.Decks,
+    JSON.stringify({
+      [title]: {
+        title,
+        questions: [card],
+      },
+    }),
+  );
+
+export const removeDeck = (title) =>
+  getDecks().then(({ [title]: toRemove, ...rest }) => {
+    AsyncStorage.removeItem(StorageKeys.Decks).then(() =>
+      AsyncStorage.setItem(StorageKeys.Decks, JSON.stringify(rest)),
     );
-    return card;
-  }
-};
+  });
