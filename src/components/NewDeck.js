@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
 import {
   View,
   Text,
   StyleSheet,
   TextInput,
   TouchableOpacity,
-} from "react-native";
+} from 'react-native';
 
 class NewDeck extends React.Component {
   state = {
-    title: "",
+    title: '',
   };
 
   handleChange = (value) => {
@@ -21,7 +21,7 @@ class NewDeck extends React.Component {
   handleSubmit = () => {
     const { navigate, handleSubmit } = this.props;
     handleSubmit(this.state.title);
-    navigate("Deck", { deckId: this.state.title });
+    navigate('Deck', { deckId: this.state.title });
   };
 
   render() {
@@ -38,7 +38,7 @@ class NewDeck extends React.Component {
           onPress={this.handleSubmit}
           disabled={title.length === 0}
         >
-          <Text style={styles.submitBtn}>Create Deck</Text>
+          <Text style={styles.submitBtn}>Create New Deck</Text>
         </TouchableOpacity>
       </View>
     );
@@ -50,12 +50,12 @@ export default NewDeck;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   input: {
     borderRadius: 4,
-    borderColor: "black",
+    borderColor: '#694fad',
     borderWidth: 1,
     width: 280,
     padding: 10,
@@ -64,8 +64,10 @@ const styles = StyleSheet.create({
   submitBtn: {
     paddingVertical: 16,
     paddingHorizontal: 32,
-    backgroundColor: "black",
-    color: "white",
+    backgroundColor: '#694fad',
+    width: 280,
+    textAlign: 'center',
+    color: '#f5f5f5',
     borderRadius: 4,
     fontSize: 16,
   },
