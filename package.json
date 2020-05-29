@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "expo": "~37.0.3",
+    "expo-constants": "^9.0.0",
     "expo-font": "^8.1.1",
     "expo-permissions": "^8.1.0",
     "expo-splash-screen": "^0.2.3",
