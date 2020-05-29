@@ -1,7 +1,37 @@
-import React from 'react';
+import { createMaterialTopTabNavigator } from 'react-navigation';
+import Home from './Home';
+import AddDeck from './AddDeck';
+import { colors } from '../utils/helpers';
 
-const TabNav = () => {
-  return <div></div>;
+const TabNavigator = createMaterialTopTabNavigator(
+  {
+    Home: {
+      screen: Home,
+      navigationOptions: {
+        tabBarLabel: 'Decks',
+      },
+    },
+    AddDeck: {
+      screen: AddDeck,
+      navigationOptions: {
+        tabBarLabel: 'Add Deck',
+      },
+    },
+  },
+  {
+    tabBarOptions: {
+      labelStyle: {
+        fontWeight: 'bold',
+      },
+      style: {
+        backgroundColor: colors.headerColor,
+      },
+    },
+  },
+);
+TabNavigator.navigationOptions = {
+  // Hide the header from AppNavigator stack
+  header: null,
 };
 
-export default TabNav;
+export default TabNavigator;
