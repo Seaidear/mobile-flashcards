@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from './src/components/Home';
 import Deck from './src/components/Deck';
@@ -12,6 +12,15 @@ import {
 } from './src/utils/api';
 import Quiz from './src/components/Quiz';
 import { setLocalNotification } from './src/utils/helpers';
+
+const MyTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    card: '#694fad',
+    text: '#f5f5f5',
+  },
+};
 
 const Stack = createStackNavigator();
 
@@ -71,7 +80,7 @@ class App extends React.Component {
   render() {
     const { decks } = this.state;
     return (
-      <NavigationContainer>
+      <NavigationContainer theme={MyTheme}>
         <Stack.Navigator>
           <Stack.Screen name="Home">
             {() => <Home decks={decks} addDeck={this.addDeck} />}

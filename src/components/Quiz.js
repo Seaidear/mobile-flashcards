@@ -1,7 +1,7 @@
-import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import Score from "./Score";
-import Answer from "./Answer";
+import React from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import Score from './Score';
+import Answer from './Answer';
 class Quiz extends React.Component {
   state = {
     answers: [],
@@ -68,29 +68,29 @@ export default Quiz;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   question: {
     fontSize: 24,
     padding: 20,
     marginBottom: 20,
-    textAlign: "center",
+    textAlign: 'center',
   },
   submitBtn: {
     paddingVertical: 16,
     paddingHorizontal: 32,
-    color: "white",
+    color: 'white',
     borderRadius: 4,
     fontSize: 16,
-    backgroundColor: "black",
+    backgroundColor: '#694fad',
     width: 180,
     marginBottom: 20,
   },
   correct: {
-    backgroundColor: "green",
+    backgroundColor: 'green',
   },
   incorrect: {
-    backgroundColor: "red",
+    backgroundColor: 'red',
   },
 });
