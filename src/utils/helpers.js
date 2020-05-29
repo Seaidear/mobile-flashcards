@@ -1,22 +1,22 @@
-import { Notifications } from "expo";
-import * as Permissions from "expo-permissions";
-import { AsyncStorage } from "react-native";
+import { Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
+import { AsyncStorage } from 'react-native';
 
 export const StorageKeys = {
-  Decks: "Decks",
-  Notifications: "Notifications",
+  Decks: 'Decks',
+  Notifications: 'Notifications',
 };
 
 export const createNotification = () => {
   return {
-    title: "Take a quiz",
-    body: "Let's test our knowledge today!",
+    title: 'What a great time to take a quiz',
+    body: "It's time to test your knowledge! Are you prepared?",
     ios: {
       sound: true,
     },
     android: {
       sound: true,
-      priority: "high",
+      priority: 'high',
       sticky: false,
       vibrate: true,
     },
@@ -29,7 +29,7 @@ export const setLocalNotification = () => {
     .then((data) => {
       if (data === null) {
         Permissions.askAsync(Permissions.NOTIFICATIONS).then(({ status }) => {
-          if (status === "granted") {
+          if (status === 'granted') {
             Notifications.cancelAllScheduledNotificationsAsync();
 
             let tomorrow = new Date();
@@ -39,10 +39,13 @@ export const setLocalNotification = () => {
 
             Notifications.scheduleLocalNotificationAsync(createNotification(), {
               time: tomorrow,
-              repeat: "day",
+              repeat: 'day',
             });
 
-            AsyncStorage.setItem(StorageKeys.Notifications, JSON.stringify(true));
+            AsyncStorage.setItem(
+              StorageKeys.Notifications,
+              JSON.stringify(true),
+            );
           }
         });
       }
@@ -51,6 +54,6 @@ export const setLocalNotification = () => {
 
 export const clearLocalNotification = () => {
   return AsyncStorage.removeItem(StorageKeys.Notifications).then(
-    Notifications.cancelAllScheduledNotificationsAsync
+    Notifications.cancelAllScheduledNotificationsAsync,
   );
 };
