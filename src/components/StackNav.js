@@ -1,7 +1,37 @@
-import React from 'react';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
+import TabNavigator from './TabNav';
+import Deck from './Deck';
+import AddCard from './AddCard';
+import Quiz from './Quiz';
+import { colors } from '../utils/helpers';
 
-const StackNav = () => {
-  return <div></div>;
-};
+const Stack = createStackNavigator({
+  Main: {
+    screen: TabNavigator,
+  },
+  Deck: {
+    screen: Deck,
+  },
+  AddCard: {
+    screen: AddCard,
+    navigationOptions: {
+      title: 'Add Card',
+      headerTintColor: 'white',
+      headerStyle: {
+        backgroundColor: colors.headerColor,
+      },
+    },
+  },
+  Quiz: {
+    screen: Quiz,
+    navigationOptions: {
+      title: 'Quiz',
+      headerTintColor: 'white',
+      headerStyle: {
+        backgroundColor: colors.headerColor,
+      },
+    },
+  },
+});
 
-export default StackNav;
+export default createAppContainer(Stack);
