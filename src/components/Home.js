@@ -36,7 +36,7 @@ class Home extends React.Component {
         })}
         initialRouteName="Decks"
         activeColor="#f0edf6"
-        inactiveColor="#3e2465"
+        inactiveColor="#a9a9a9"
         barStyle={{ backgroundColor: '#694fad' }}
       >
         <Tab.Screen name="Decks">
