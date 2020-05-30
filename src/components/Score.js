@@ -1,30 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { setLocalNotification, clearLocalNotification } from '../utils/helpers';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-class Score extends React.Component {
-  componentDidMount() {
+const Score = (props) => {
+  useEffect(() => {
     clearLocalNotification();
     setLocalNotification();
-  }
+  });
 
-  render() {
-    const { correct, total, resetQuiz, goBack } = this.props;
-    return (
-      <View style={styles.container}>
-        <Text style={styles.score}>
-          SCORE: {correct} / {total}
-        </Text>
-        <TouchableOpacity onPress={resetQuiz}>
-          <Text style={styles.submitBtn}>Restart Quiz</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={goBack}>
-          <Text style={styles.submitBtn}>Back to Deck</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-}
+  const { correct, total, resetQuiz, goBack } = props;
+  return (
+    <View style={styles.container}>
+      <Text style={styles.score}>
+        SCORE: {correct} / {total}
+      </Text>
+      <TouchableOpacity onPress={resetQuiz}>
+        <Text style={styles.submitBtn}>Restart Quiz</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={goBack}>
+        <Text style={styles.submitBtn}>Back to Deck</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 export default Score;
 
