@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -7,50 +7,38 @@ import {
   StyleSheet,
 } from 'react-native';
 
-class NewQuestion extends React.Component {
-  state = {
-    question: '',
-    answer: '',
-  };
+const NewQuestion = ({ handleSubmit, navigate, deckId }) => {
+  const [question, setQuestion] = useState('');
+  const [answer, setAnswer] = useState('');
 
-  handleChange = (input, value) => {
-    this.setState({
-      [input]: value,
-    });
-  };
-
-  onSubmit = () => {
-    const { handleSubmit, navigate, deckId } = this.props;
-    handleSubmit(this.state);
+  const onSubmit = () => {
+    handleSubmit({ question, answer });
     navigate('Deck', { deckId });
   };
 
-  render() {
-    const { question, answer } = this.state;
-    return (
-      <View style={styles.container}>
-        <TextInput
-          placeholder="Question"
-          value={question}
-          onChangeText={(val) => this.handleChange('question', val)}
-          style={styles.questions}
-        />
-        <TextInput
-          placeholder="Answer"
-          value={answer}
-          onChangeText={(val) => this.handleChange('answer', val)}
-          style={styles.questions}
-        />
-        <TouchableOpacity
-          onPress={this.onSubmit}
-          disabled={question.length === 0 || answer.length === 0}
-        >
-          <Text style={styles.submitBtn}>Submit</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-}
+  return (
+    <View style={styles.container}>
+      <TextInput
+        placeholder="Question"
+        value={question}
+        onChangeText={(val) => setQuestion(val)}
+        style={styles.questions}
+      />
+      <TextInput
+        placeholder="Answer"
+        value={answer}
+        onChangeText={(val) => setAnswer(val)}
+        style={styles.questions}
+      />
+      <TouchableOpacity
+        onPress={onSubmit}
+        disabled={question.length === 0 || answer.length === 0}
+      >
+        <Text style={styles.submitBtn}>Submit</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 export default NewQuestion;
 

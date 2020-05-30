@@ -2,13 +2,12 @@ import React, { useEffect } from 'react';
 import { setLocalNotification, clearLocalNotification } from '../utils/helpers';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-const Score = (props) => {
+const Score = ({ correct, total, resetQuiz, goBack }) => {
   useEffect(() => {
     clearLocalNotification();
     setLocalNotification();
   });
 
-  const { correct, total, resetQuiz, goBack } = props;
   return (
     <View style={styles.container}>
       <Text style={styles.score}>

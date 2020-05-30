@@ -11,25 +11,22 @@ import NewDeck from './NewDeck';
 
 const Stack = createStackNavigator();
 
-class DeckList extends React.Component {
-  render() {
-    const { navigate, decks } = this.props;
-    return (
-      <ScrollView contentContainerStyle={styles.container}>
-        {Object.values(decks).map((deck) => (
-          <Cover
-            key={deck.title}
-            {...deck}
-            onPress={() => navigate('Deck', { deckId: deck.title })}
-          />
-        ))}
-        <Stack.Navigator>
-          <Stack.Screen name="Deck" component={NewDeck} />
-        </Stack.Navigator>
-      </ScrollView>
-    );
-  }
-}
+const DeckList = ({ navigate, decks }) => {
+  return (
+    <ScrollView contentContainerStyle={styles.container}>
+      {Object.values(decks).map((deck) => (
+        <Cover
+          key={deck.title}
+          {...deck}
+          onPress={() => navigate('Deck', { deckId: deck.title })}
+        />
+      ))}
+      <Stack.Navigator>
+        <Stack.Screen name="Deck" component={NewDeck} />
+      </Stack.Navigator>
+    </ScrollView>
+  );
+};
 
 const Cover = (deck) => {
   const {

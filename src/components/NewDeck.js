@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -7,44 +7,31 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-class NewDeck extends React.Component {
-  state = {
-    title: '',
+const NewDeck = ({ navigate, handleSubmit }) => {
+  const [title, setTitle] = useState('');
+
+  const handleChange = (value) => setTitle(value);
+
+  const onSubmit = () => {
+    handleSubmit(title);
+    setTitle('');
+    navigate('Deck', { deckId: title });
   };
 
-  handleChange = (value) => {
-    this.setState({
-      title: value,
-    });
-  };
-
-  handleSubmit = () => {
-    const { navigate, handleSubmit } = this.props;
-    handleSubmit(this.state.title);
-    this.setState({ title: '' });
-    navigate('Deck', { deckId: this.state.title });
-  };
-
-  render() {
-    const { title } = this.state;
-    return (
-      <View style={styles.container}>
-        <TextInput
-          placeholder="Deck title"
-          value={title}
-          onChangeText={this.handleChange}
-          style={styles.input}
-        />
-        <TouchableOpacity
-          onPress={this.handleSubmit}
-          disabled={title.length === 0}
-        >
-          <Text style={styles.submitBtn}>Create New Deck</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-}
+  return (
+    <View style={styles.container}>
+      <TextInput
+        placeholder="Deck title"
+        value={title}
+        onChangeText={handleChange}
+        style={styles.input}
+      />
+      <TouchableOpacity onPress={onSubmit} disabled={title.length === 0}>
+        <Text style={styles.submitBtn}>Create New Deck</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 export default NewDeck;
 
