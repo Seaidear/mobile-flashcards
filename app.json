@@ -4,6 +4,7 @@
   "expo": {
     "name": "Mobile Flashcards",
     "slug": "mobile-flashcards",
+    "orientation": "portrait",
     "version": "1.0.0",
     "platforms": [
       "ios",
