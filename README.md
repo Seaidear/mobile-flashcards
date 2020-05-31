@@ -20,3 +20,7 @@ After installing all dependencies you can test the app using the expo mobile-app
 `npm start`
 
 Open the expo app on your phone and scan the QR code you see on your screen to test the app directly on your mobile device.
+
+## Testing
+
+This app has been tested on Android.
