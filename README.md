@@ -2,8 +2,6 @@
 
 This is a productivity app created with React Native using the Expo CLI. The user can create virtual decks of flashcards, build a library of questions and answers for a specific topic and challenge himself by taking quizzes and documenting his learning progress. Daily notifications remind the user to keep at it.
 
-You can check out the live project in an Expo Snack by clicking [here](https://snack.expo.io/@git/github.com/Pobermeier/reactnd-mobile-flashcards).
-
 ## Installation
 
 Please note that this project was created using the Expo CLI. To run the app for testing the Expo CLI needs to be installed globally on your system. You can install the tool with the following CLI command:
